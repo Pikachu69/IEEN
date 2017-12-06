@@ -27,18 +27,27 @@ public class ventanaInventario extends javax.swing.JFrame {
     conexion con;
     DefaultTableModel modelo;
     private String accion, id_actualizar,sql,mensaje;
+    String campoconsulta;
     /**
      * Creates new form ventanaInventario
      */
     public ventanaInventario() {
         initComponents();
         this.setTitle("Inventario");
+        
         panelAlta.setVisible(false);
-        panelModificar.setVisible(false);
+        
         this.setLocationRelativeTo(null);
+        
         primeraCarga();
+        
         modificarBtn.setEnabled(false);
+        
+        darDeBajaBtn.setEnabled(false);
+        
         accion = "Insertar";
+        
+        inventarioBtn.setEnabled(false);
        
     }
 
@@ -115,52 +124,6 @@ public class ventanaInventario extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         buscarField = new javax.swing.JTextField();
-        panelModificar = new javax.swing.JPanel();
-        jLabel43 = new javax.swing.JLabel();
-        idModField = new javax.swing.JTextField();
-        jLabel44 = new javax.swing.JLabel();
-        numeralModField = new javax.swing.JTextField();
-        jLabel45 = new javax.swing.JLabel();
-        nombreModField = new javax.swing.JTextField();
-        jLabel46 = new javax.swing.JLabel();
-        jLabel47 = new javax.swing.JLabel();
-        subcatModField = new javax.swing.JTextField();
-        jLabel48 = new javax.swing.JLabel();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        descModField = new javax.swing.JTextArea();
-        marcaModField = new javax.swing.JTextField();
-        jLabel49 = new javax.swing.JLabel();
-        noSerieModField = new javax.swing.JTextField();
-        jLabel50 = new javax.swing.JLabel();
-        jLabel51 = new javax.swing.JLabel();
-        modeloModField = new javax.swing.JTextField();
-        jLabel52 = new javax.swing.JLabel();
-        colorModField = new javax.swing.JTextField();
-        fechaComModField = new javax.swing.JTextField();
-        jLabel53 = new javax.swing.JLabel();
-        noFacModField = new javax.swing.JTextField();
-        jLabel54 = new javax.swing.JLabel();
-        cantidadModField = new javax.swing.JTextField();
-        jLabel55 = new javax.swing.JLabel();
-        jLabel56 = new javax.swing.JLabel();
-        importeModField = new javax.swing.JTextField();
-        jLabel57 = new javax.swing.JLabel();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        obsModField = new javax.swing.JTextArea();
-        cantMinModField = new javax.swing.JTextField();
-        jLabel58 = new javax.swing.JLabel();
-        guardarModBtn = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel59 = new javax.swing.JLabel();
-        placaModField = new javax.swing.JTextField();
-        motorModField = new javax.swing.JTextField();
-        jLabel60 = new javax.swing.JLabel();
-        jLabel61 = new javax.swing.JLabel();
-        jLabel62 = new javax.swing.JLabel();
-        kilomModField = new javax.swing.JTextField();
-        kilomMaxModField = new javax.swing.JTextField();
-        jLabel63 = new javax.swing.JLabel();
-        cancelarModBtn = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
 
@@ -182,6 +145,11 @@ public class ventanaInventario extends javax.swing.JFrame {
         modificarBtn.setBounds(0, 350, 190, 70);
 
         darDeBajaBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Baja.png"))); // NOI18N
+        darDeBajaBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                darDeBajaBtnActionPerformed(evt);
+            }
+        });
         BarraLatera.add(darDeBajaBtn);
         darDeBajaBtn.setBounds(0, 420, 190, 70);
 
@@ -237,6 +205,8 @@ public class ventanaInventario extends javax.swing.JFrame {
         ID.setText("Status");
         panelAlta.add(ID);
         ID.setBounds(710, 160, 60, 30);
+
+        numeralAltaField.setEditable(false);
         panelAlta.add(numeralAltaField);
         numeralAltaField.setBounds(150, 220, 130, 30);
 
@@ -476,195 +446,16 @@ public class ventanaInventario extends javax.swing.JFrame {
         jButton1.setBounds(380, 120, 125, 40);
 
         buscarField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        buscarField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                buscarFieldKeyReleased(evt);
+            }
+        });
         panelInventario.add(buscarField);
         buscarField.setBounds(70, 120, 270, 40);
 
         areaAcción.add(panelInventario);
         panelInventario.setBounds(0, 0, 1110, 840);
-
-        panelModificar.setBackground(new java.awt.Color(255, 255, 255));
-        panelModificar.setOpaque(false);
-        panelModificar.setLayout(null);
-
-        jLabel43.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel43.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel43.setText("Modificar Información de Artículo");
-        panelModificar.add(jLabel43);
-        jLabel43.setBounds(70, 40, 590, 90);
-        panelModificar.add(idModField);
-        idModField.setBounds(150, 160, 170, 30);
-
-        jLabel44.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel44.setText("ID:");
-        panelModificar.add(jLabel44);
-        jLabel44.setBounds(70, 160, 70, 30);
-        panelModificar.add(numeralModField);
-        numeralModField.setBounds(450, 160, 130, 30);
-
-        jLabel45.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel45.setText("Numeral:");
-        panelModificar.add(jLabel45);
-        jLabel45.setBounds(340, 160, 110, 30);
-        panelModificar.add(nombreModField);
-        nombreModField.setBounds(150, 210, 300, 30);
-
-        jLabel46.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel46.setText("Nombre:");
-        panelModificar.add(jLabel46);
-        jLabel46.setBounds(70, 210, 80, 30);
-
-        jLabel47.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel47.setText("Sub Categoria:");
-        panelModificar.add(jLabel47);
-        jLabel47.setBounds(600, 160, 120, 30);
-        panelModificar.add(subcatModField);
-        subcatModField.setBounds(730, 160, 220, 30);
-
-        jLabel48.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel48.setText("Descripción:");
-        panelModificar.add(jLabel48);
-        jLabel48.setBounds(480, 210, 110, 30);
-
-        descModField.setColumns(20);
-        descModField.setRows(5);
-        jScrollPane6.setViewportView(descModField);
-
-        panelModificar.add(jScrollPane6);
-        jScrollPane6.setBounds(600, 210, 350, 130);
-        panelModificar.add(marcaModField);
-        marcaModField.setBounds(150, 410, 170, 30);
-
-        jLabel49.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel49.setText("Marca:");
-        panelModificar.add(jLabel49);
-        jLabel49.setBounds(70, 410, 110, 30);
-        panelModificar.add(noSerieModField);
-        noSerieModField.setBounds(740, 410, 210, 30);
-
-        jLabel50.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel50.setText("No. de Serie:");
-        panelModificar.add(jLabel50);
-        jLabel50.setBounds(610, 410, 130, 30);
-
-        jLabel51.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel51.setText("Modelo:");
-        panelModificar.add(jLabel51);
-        jLabel51.setBounds(340, 410, 90, 30);
-        panelModificar.add(modeloModField);
-        modeloModField.setBounds(450, 410, 130, 30);
-
-        jLabel52.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel52.setText("Color:");
-        panelModificar.add(jLabel52);
-        jLabel52.setBounds(70, 260, 110, 30);
-        panelModificar.add(colorModField);
-        colorModField.setBounds(150, 260, 300, 30);
-        panelModificar.add(fechaComModField);
-        fechaComModField.setBounds(200, 310, 120, 30);
-
-        jLabel53.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel53.setText("Fecha compra:");
-        panelModificar.add(jLabel53);
-        jLabel53.setBounds(70, 310, 120, 30);
-        panelModificar.add(noFacModField);
-        noFacModField.setBounds(450, 310, 130, 30);
-
-        jLabel54.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel54.setText("No. Factura:");
-        panelModificar.add(jLabel54);
-        jLabel54.setBounds(340, 310, 120, 30);
-        panelModificar.add(cantidadModField);
-        cantidadModField.setBounds(150, 460, 170, 30);
-
-        jLabel55.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel55.setText("Cantidad:");
-        panelModificar.add(jLabel55);
-        jLabel55.setBounds(70, 460, 120, 30);
-
-        jLabel56.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel56.setText("Importe:");
-        panelModificar.add(jLabel56);
-        jLabel56.setBounds(70, 360, 120, 30);
-        panelModificar.add(importeModField);
-        importeModField.setBounds(150, 360, 170, 30);
-
-        jLabel57.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel57.setText("Observaciones:");
-        panelModificar.add(jLabel57);
-        jLabel57.setBounds(340, 460, 120, 30);
-
-        obsModField.setColumns(20);
-        obsModField.setRows(5);
-        jScrollPane7.setViewportView(obsModField);
-
-        panelModificar.add(jScrollPane7);
-        jScrollPane7.setBounds(470, 460, 480, 90);
-        panelModificar.add(cantMinModField);
-        cantMinModField.setBounds(200, 510, 120, 30);
-
-        jLabel58.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel58.setText("Cantidad (Min):");
-        panelModificar.add(jLabel58);
-        jLabel58.setBounds(70, 510, 120, 30);
-
-        guardarModBtn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        guardarModBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Guardar.png"))); // NOI18N
-        panelModificar.add(guardarModBtn);
-        guardarModBtn.setBounds(660, 710, 125, 40);
-
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Vehículo", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14))); // NOI18N
-        jPanel2.setOpaque(false);
-        jPanel2.setLayout(null);
-
-        jLabel59.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel59.setText("Placa:");
-        jPanel2.add(jLabel59);
-        jLabel59.setBounds(40, 30, 130, 30);
-        jPanel2.add(placaModField);
-        placaModField.setBounds(130, 30, 270, 30);
-        jPanel2.add(motorModField);
-        motorModField.setBounds(130, 80, 270, 30);
-
-        jLabel60.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel60.setText("Motor:");
-        jPanel2.add(jLabel60);
-        jLabel60.setBounds(40, 80, 120, 30);
-
-        jLabel61.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel61.setText("Kilometraje (Max):");
-        jPanel2.add(jLabel61);
-        jLabel61.setBounds(460, 80, 150, 30);
-
-        jLabel62.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel62.setText("Kilometraje:");
-        jPanel2.add(jLabel62);
-        jLabel62.setBounds(460, 30, 100, 30);
-        jPanel2.add(kilomModField);
-        kilomModField.setBounds(570, 30, 280, 30);
-        jPanel2.add(kilomMaxModField);
-        kilomMaxModField.setBounds(620, 80, 230, 30);
-
-        panelModificar.add(jPanel2);
-        jPanel2.setBounds(70, 570, 880, 120);
-
-        jLabel63.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel63.setText("Modifica los campos siguientes para editar la información de algun artículo seleccionado en el inventario.");
-        panelModificar.add(jLabel63);
-        jLabel63.setBounds(70, 120, 880, 20);
-
-        cancelarModBtn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cancelarModBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Cancelar.png"))); // NOI18N
-        cancelarModBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelarModBtnActionPerformed(evt);
-            }
-        });
-        panelModificar.add(cancelarModBtn);
-        cancelarModBtn.setBounds(820, 710, 125, 40);
-
-        areaAcción.add(panelModificar);
-        panelModificar.setBounds(0, 0, 1110, 810);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -716,49 +507,42 @@ public class ventanaInventario extends javax.swing.JFrame {
     }//GEN-LAST:event_atrasBtnActionPerformed
 
     private void inventarioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inventarioBtnActionPerformed
+        inventarioBtn.setEnabled(false);
+        darDeAltaBtn.setEnabled(true);
+        modificarBtn.setEnabled(false);
         panelAlta.setVisible(false);
         panelInventario.setVisible(true);
-        panelModificar.setVisible(false);
+        comboClas.setSelectedIndex(0);
+        comboStatus.setSelectedIndex(0);
         primeraCarga();
         
     }//GEN-LAST:event_inventarioBtnActionPerformed
 
     private void darDeAltaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_darDeAltaBtnActionPerformed
+        inventarioBtn.setEnabled(true);
+        modificarBtn.setEnabled(false);
+        darDeAltaBtn.setEnabled(false);
+        accion = "Insertar";
+        borrarCampos();
         panelAlta.setVisible(true);
         panelInventario.setVisible(false);
-        panelModificar.setVisible(false);
         panelAuto.setVisible(false);
+        comboClas.setSelectedIndex(0);
+        comboStatus.setSelectedIndex(0);
+        
+        cargarNuevoProducto();
+        
         
     }//GEN-LAST:event_darDeAltaBtnActionPerformed
 
     private void modificarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarBtnActionPerformed
-        panelAlta.setVisible(false);
+        darDeAltaBtn.setEnabled(true);
+        modificarBtn.setEnabled(false);
+        inventarioBtn.setEnabled(true);
+        accion = "Modificar";
+        panelAlta.setVisible(true);
         panelInventario.setVisible(false);
-        panelModificar.setVisible(true);
     }//GEN-LAST:event_modificarBtnActionPerformed
-
-    private void cancelarModBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarModBtnActionPerformed
-    cantMinModField.setText("");
-    cantidadModField.setText("");
-    colorModField.setText("");
-    descModField.setText("");
-    fechaComModField.setText("");
-    idModField.setText("");
-    importeModField.setText("");
-    buscarField.setText("");
-    kilomMaxModField.setText("");
-    kilomModField.setText("");
-    marcaModField.setText("");
-    modeloModField.setText("");
-    motorModField.setText("");
-    noFacModField.setText("");
-    noSerieModField.setText("");
-    nombreModField.setText("");
-    numeralModField.setText("");
-    obsModField.setText("");
-    placaModField.setText("");
-    subcatModField.setText("");
-    }//GEN-LAST:event_cancelarModBtnActionPerformed
 
     private boolean validacion(String Numeral, String Sub_cat, String Nombre, String Color, 
             String Descripcion, String Fecha_compra, String No_Factura, String importe, String marca, 
@@ -776,15 +560,18 @@ public class ventanaInventario extends javax.swing.JFrame {
         }
     }
     private void guardarAltaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarAltaBtnActionPerformed
+    inventarioBtn.setEnabled(true);
+    modificarBtn.setEnabled(false);
+    darDeAltaBtn.setEnabled(true);
     String Numeral,Sub_cat,Nombre,Descripcion,marca,modelo,no_serie,Color,placa,motor,Fecha_compra,No_Factura,
-           observaciones;
-    int ID,status,clasificacion,cantidad,cantidad_min,km,km_max;
+           observaciones,km,km_max;
+    int status,clasificacion,cantidad,cantidad_min;
     
     double importe;
     
     status = comboStatus.getSelectedIndex()+1;
     clasificacion = comboClas.getSelectedIndex()+1;
-    ID = Integer.valueOf(idAltaField.getText());
+    //ID = Integer.valueOf(idAltaField.getText());
     Numeral = numeralAltaField.getText();
     Sub_cat = subcatAltaField.getText();
     Nombre = nombreAltaField.getText();
@@ -800,43 +587,97 @@ public class ventanaInventario extends javax.swing.JFrame {
     observaciones = obsAltaField.getText();
     cantidad_min = Integer.valueOf(cantMinAltaField.getText());
     placa = placaAltaField.getText();
-    km = Integer.valueOf(kilomAltaField.getText());
+    km = kilomAltaField.getText();
     motor = motorAltaField.getText();
-    km_max = Integer.valueOf(kilomMaxAltaField.getText());
+    km_max = kilomMaxAltaField.getText();
     
     //validacion(Numeral, Sub_cat, Nombre, Color, Descripcion, Fecha_compra, No_Factura, importe, marca, modelo,
       //         no_serie, cantidad, observaciones, cantidad_min, placa, km, motor, km_max);
     
     //if(validacion == true){
          try {
+             PreparedStatement pst;
             System.out.println("Previo a conexion..."); 
-            con = new conexion(); 
-            if(accion.equals("Insertar")){
-                sql= "INSERT INTO productos( ,Apellido,Departamento,Direccion,Secretaria,Domicilio,Telefono_oficina,Telefono_celular,Correo,Observaciones)"+" VALUES(?,?,?,?,?,?,?,?,?,?)";
+            con = new conexion();
+            if(comboClas.getSelectedIndex()==7){
+                if(accion.equals("Insertar")){
+                sql= "INSERT INTO productos(con_pro,subcat_pro,nom_pro,des_pro,mar_pro,mod_pro,ser_pro,col_pro,pla_pro,nomot_pro,fechcompra_pro,nofact_pro,imp_pro,obs_pro,stock_pro,stockmin_pro,km_pro,km_ser_pro,status_id_status,clasificacion_id_clas)"+" VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                 mensaje="Los datos se han insertado";
+                borrarCampos();
             }
             
             if((accion.equals("Modificar"))){
                 System.out.println("Estoy actualizando...");
-                sql= "UPDATE Contacto SET Nombre = ?, Apellido = ?,Departamento = ?,Direccion = ?,Secretaria = ?, Domicilio = ?,Telefono_oficina = ?,Telefono_celular = ?,Correo = ?,Observaciones = ? WHERE Nombre = "+"'"+id_actualizar+"'";
+                sql= "UPDATE productos SET con_pro = ?, subcat_pro = ?, nom_pro = ?,des_pro = ?,mar_pro = ?, mod_pro = ?,ser_pro = ?,col_pro = ?,pla_pro = ?,nomot_pro = ?,fechcompra_pro = ?,nofact_pro = ?,imp_pro = ?,obs_pro = ?, stock_pro = ?, stockmin_pro = ?, km_pro = ?,km_ser_pro = ?,status_id_status = ?,clasificacion_id_clas = ? WHERE idproductos = "+id_actualizar;
                 mensaje="Los datos se han actualizado";
-            }PreparedStatement pst=con.conectar.prepareStatement(sql);
-            pst.setString(1, ID);
-            pst.setString(2, ape);
-            pst.setString(3, dep);
-            pst.setString(4, dir);
-            pst.setString(5, sec);
-            pst.setString(6, dom);
-            pst.setString(7, telof);
-            pst.setString(8, telcel);
-            pst.setString(9, corr);
-            pst.setString(10, observ);
+            }
+            pst=con.conectar.prepareStatement(sql);
+            pst.setString(1, Numeral);
+            pst.setString(2, Sub_cat);
+            pst.setString(3, Nombre);
+            pst.setString(4, Descripcion);
+            pst.setString(5, marca);
+            pst.setString(6, modelo);
+            pst.setString(7, no_serie);
+            pst.setString(8, Color);
+            pst.setString(9, placa);
+            pst.setString(10, motor);
+            pst.setString(11, Fecha_compra);
+            pst.setString(12, No_Factura);
+            pst.setDouble(13, importe);
+            pst.setString(14, observaciones);
+            pst.setInt(15, cantidad);
+            pst.setInt(16, cantidad_min);
+            pst.setString(17, km);
+            pst.setString(18, km_max);
+            pst.setInt(19, status);
+            pst.setInt(20, clasificacion);
+            }
+            else{
+            if(accion.equals("Insertar")){
+                sql= "INSERT INTO productos(con_pro,subcat_pro,nom_pro,des_pro,mar_pro,mod_pro,ser_pro,col_pro,fechcompra_pro,nofact_pro,imp_pro,obs_pro,stock_pro,stockmin_pro,status_id_status,clasificacion_id_clas)"+" VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                mensaje="Los datos se han insertado";
+                borrarCampos();
+            }
+            
+            if((accion.equals("Modificar"))){
+                System.out.println("Estoy actualizando...");
+                sql= "UPDATE productos SET con_pro = ?, subcat_pro = ?, nom_pro = ?,des_pro = ?,mar_pro = ?, mod_pro = ?,ser_pro = ?,col_pro = ?,fechcompra_pro = ?,nofact_pro = ?,imp_pro = ?,obs_pro = ?, stock_pro = ?, stockmin_pro = ?, status_id_status = ?,clasificacion_id_clas = ? WHERE idproductos = "+id_actualizar;
+                mensaje="Los datos se han actualizado";
+            }
+            pst=con.conectar.prepareStatement(sql);
+            pst.setString(1, Numeral);
+            pst.setString(2, Sub_cat);
+            pst.setString(3, Nombre);
+            pst.setString(4, Descripcion);
+            pst.setString(5, marca);
+            pst.setString(6, modelo);
+            pst.setString(7, no_serie);
+            pst.setString(8, Color);
+            pst.setString(9, Fecha_compra);
+            pst.setString(10, No_Factura);
+            pst.setDouble(11, importe);
+            pst.setString(12, observaciones);
+            pst.setInt(13, cantidad);
+            pst.setInt(14, cantidad_min);
+            pst.setInt(15, status);
+            pst.setInt(16, clasificacion);
+            }
+            
            
             int n=pst.executeUpdate();
+            borrarCampos();
             System.out.println("Valor n= "+n);
             if(n>0){
                 JOptionPane.showMessageDialog(null, mensaje);
                 primeraCarga();
+            if(accion == "Modificar"){
+                panelAlta.setVisible(false);
+                panelInventario.setVisible(true);
+                comboClas.setSelectedIndex(0);
+                comboStatus.setSelectedIndex(0);
+            }
+                
             }
         } catch (SQLException ex) {
            System.out.println("Entró a catch...");
@@ -849,8 +690,9 @@ public class ventanaInventario extends javax.swing.JFrame {
     private void comboClasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboClasActionPerformed
         if(comboClas.getSelectedIndex()!=7){
             panelAuto.setVisible(false);
-        }else if(comboClas.getSelectedIndex()==7) 
+        }else if(comboClas.getSelectedIndex()==7){ 
             panelAuto.setVisible(true);
+        }
     }//GEN-LAST:event_comboClasActionPerformed
 
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
@@ -867,8 +709,61 @@ public class ventanaInventario extends javax.swing.JFrame {
         id_actualizar = Id;
         cargarDatos(Id);
         modificarBtn.setEnabled(true);
+        darDeBajaBtn.setEnabled(true);
     }//GEN-LAST:event_tablaInventarioMouseClicked
 
+    private void buscarFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarFieldKeyReleased
+        cargarTabla(buscarField.getText());
+    }//GEN-LAST:event_buscarFieldKeyReleased
+
+    private void darDeBajaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_darDeBajaBtnActionPerformed
+        if(JOptionPane.YES_NO_OPTION==JOptionPane.showConfirmDialog(null,"¿Desea eliminar este producto? ","Eliminar productos",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE)){
+            System.out.println("Previo a mensaje y deshabilitacion");
+            String id=idAltaField.getText();
+            mensaje="Producto eliminado";
+        
+            try {
+                con = new conexion();
+                con.Eliminar("productos", "idproductos", id);
+                JOptionPane.showMessageDialog(null, mensaje);
+                primeraCarga();
+                JOptionPane.showMessageDialog(null, "se cargó tabla correctamente");
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex);
+            }
+        }
+        modificarBtn.setEnabled(false);
+        darDeBajaBtn.setEnabled(false);
+    }//GEN-LAST:event_darDeBajaBtnActionPerformed
+
+    public void cargarTabla(String valor){
+        String[] titulos={"ID","clave","Nombre","Marca","Serie","Color","Placas","Stock"};
+
+        String[] registros= new String[8];
+        modelo = new DefaultTableModel(null,titulos);
+        try {
+            //Mostrar registros en la tabla
+            con = new conexion();
+            ResultSet consulta= con.Consultar1("productos", "nom_pro", valor);
+            while(consulta.next()){
+                registros[0] = consulta.getString("idproductos");
+                registros[1] = consulta.getString("clave");
+                registros[2] = consulta.getString("nom_pro");
+                registros[3] = consulta.getString("mar_pro");
+                registros[4] = consulta.getString("ser_pro");
+                registros[5] = consulta.getString("col_pro");
+                registros[6] = consulta.getString("placas");
+                registros[7] = consulta.getString("stock_pro");
+                modelo.addRow(registros);               
+            }
+            //Mostrar titulos de la tabla
+            tablaInventario.setModel(modelo);
+            
+        } catch (SQLException ex) {    
+            JOptionPane.showMessageDialog(null,ex);
+        }
+    }
+    
     private void cargarDatos(String Id){
         try {
             con = new conexion();
@@ -894,10 +789,29 @@ public class ventanaInventario extends javax.swing.JFrame {
                 cantMinAltaField.setText(consulta.getString("stockmin_pro"));
                 kilomAltaField.setText(consulta.getString("km_pro"));
                 kilomMaxAltaField.setText(consulta.getString("km_ser_pro"));
-                comboStatus.setSelectedIndex(Integer.valueOf(consulta.getString("status_id_status")));
-                comboClas.setSelectedIndex(Integer.valueOf(consulta.getString("clasificacion_id_clas")));
+                comboStatus.setSelectedIndex(consulta.getInt("status_id_status")-1);
+                comboClas.setSelectedIndex(consulta.getInt("clasificacion_id_clas")-1);
             }
             
+        } catch (SQLException ex) {}
+    }
+    
+    private void cargarNuevoProducto(){
+        int id=0,numeral=0;
+        try {
+            con = new conexion();
+            ResultSet consulta = con.ConsultarNuevoID();
+            //Recorre registros para mostrarlos
+            while(consulta.next()){
+                id = Integer.parseInt(consulta.getString("id"))+1;
+                numeral = Integer.parseInt(consulta.getString("numeral"))+1;
+            }
+            idAltaField.setText(""+id);
+            if(numeral<10){
+            numeralAltaField.setText("000"+numeral);
+            }else if(numeral>=10 && numeral<100) numeralAltaField.setText("00"+numeral);
+            else if(numeral>=100 && numeral<1000) numeralAltaField.setText("0"+numeral);
+            else numeralAltaField.setText(""+numeral);
         } catch (SQLException ex) {}
     }
     
@@ -945,27 +859,18 @@ public class ventanaInventario extends javax.swing.JFrame {
     private javax.swing.JPanel areaAcción;
     private javax.swing.JButton atrasBtn;
     private javax.swing.JTextField buscarField;
-    private javax.swing.JButton cancelarModBtn;
     private javax.swing.JTextField cantMinAltaField;
-    private javax.swing.JTextField cantMinModField;
     private javax.swing.JTextField cantidadAltaField;
-    private javax.swing.JTextField cantidadModField;
     private javax.swing.JTextField colorAltaField;
-    private javax.swing.JTextField colorModField;
     private javax.swing.JComboBox<String> comboClas;
     private javax.swing.JComboBox<String> comboStatus;
     private javax.swing.JButton darDeAltaBtn;
     private javax.swing.JButton darDeBajaBtn;
     private javax.swing.JTextArea descAltaField;
-    private javax.swing.JTextArea descModField;
     private javax.swing.JTextField fechaComAltaField;
-    private javax.swing.JTextField fechaComModField;
     private javax.swing.JButton guardarAltaBtn;
-    private javax.swing.JButton guardarModBtn;
     private javax.swing.JTextField idAltaField;
-    private javax.swing.JTextField idModField;
     private javax.swing.JTextField importeAltaField;
-    private javax.swing.JTextField importeModField;
     private javax.swing.JButton inventarioBtn;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -984,75 +889,38 @@ public class ventanaInventario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel43;
-    private javax.swing.JLabel jLabel44;
-    private javax.swing.JLabel jLabel45;
-    private javax.swing.JLabel jLabel46;
-    private javax.swing.JLabel jLabel47;
-    private javax.swing.JLabel jLabel48;
-    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel50;
-    private javax.swing.JLabel jLabel51;
-    private javax.swing.JLabel jLabel52;
-    private javax.swing.JLabel jLabel53;
-    private javax.swing.JLabel jLabel54;
-    private javax.swing.JLabel jLabel55;
-    private javax.swing.JLabel jLabel56;
-    private javax.swing.JLabel jLabel57;
-    private javax.swing.JLabel jLabel58;
-    private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel60;
-    private javax.swing.JLabel jLabel61;
-    private javax.swing.JLabel jLabel62;
-    private javax.swing.JLabel jLabel63;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTextField kilomAltaField;
     private javax.swing.JTextField kilomMaxAltaField;
-    private javax.swing.JTextField kilomMaxModField;
-    private javax.swing.JTextField kilomModField;
     private javax.swing.JLabel lblnombre;
     private javax.swing.JLabel lblnumeral;
     private javax.swing.JLabel logo;
     private javax.swing.JTextField marcaAltaField;
-    private javax.swing.JTextField marcaModField;
     private javax.swing.JTextField modeloAltaField;
-    private javax.swing.JTextField modeloModField;
     private javax.swing.JButton modificarBtn;
     private javax.swing.JTextField motorAltaField;
-    private javax.swing.JTextField motorModField;
     private javax.swing.JTextField noFacAltaField;
-    private javax.swing.JTextField noFacModField;
     private javax.swing.JTextField noSerieAltaField;
-    private javax.swing.JTextField noSerieModField;
     private javax.swing.JTextField nombreAltaField;
-    private javax.swing.JTextField nombreModField;
     private javax.swing.JTextField numeralAltaField;
-    private javax.swing.JTextField numeralModField;
     private javax.swing.JTextArea obsAltaField;
-    private javax.swing.JTextArea obsModField;
     private javax.swing.JPanel panelAlta;
     private javax.swing.JPanel panelAuto;
     private javax.swing.JPanel panelInventario;
-    private javax.swing.JPanel panelModificar;
     private javax.swing.JTextField placaAltaField;
-    private javax.swing.JTextField placaModField;
     private javax.swing.JTextField subcatAltaField;
-    private javax.swing.JTextField subcatModField;
     private javax.swing.JTable tablaInventario;
     // End of variables declaration//GEN-END:variables
 
     private void borrarCampos() {
-        idAltaField.setText("");
+    idAltaField.setText("");
     numeralAltaField.setText("");
     subcatAltaField.setText("");
     nombreAltaField.setText("");

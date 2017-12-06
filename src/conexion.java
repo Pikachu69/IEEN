@@ -60,10 +60,28 @@ public class conexion {
     
     
     public ResultSet primerCarga() throws SQLException{
-        Datos1= stmt.executeQuery("select idproductos, concat(fol_clas,con_pro,subcat_pro) as clave, nom_pro, mar_pro, ser_pro, col_pro, pia_pro as placas, stock_pro from productos inner join clasificacion on productos.clasificacion_id_clas = clasificacion.id_clas;");
+        Datos1= stmt.executeQuery("select idproductos, concat(fol_clas,con_pro,subcat_pro) as clave, nom_pro, mar_pro, ser_pro, col_pro, pla_pro as placas, stock_pro from productos inner join clasificacion on productos.clasificacion_id_clas = clasificacion.id_clas;");
         return Datos1;
     }
+    
+    ResultSet ConsultarNuevoID() {
+        try {
+            Datos= stmt.executeQuery("select max(idproductos) as id, max(con_pro) as numeral from productos;");
+        } catch (SQLException ex) {
+            Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Datos;
+    }
 
+    public ResultSet Consultar1(String tabla, String campo,String valor){
+        try {
+            Datos= stmt.executeQuery("SELECT idproductos, concat(fol_clas,con_pro,subcat_pro) as clave, nom_pro, mar_pro, ser_pro, col_pro, pla_pro as placas, stock_pro from productos inner join clasificacion on productos.clasificacion_id_clas = clasificacion.id_clas WHERE "+campo+" LIKE '"+valor+"%'");//'R%'
+        } catch (SQLException ex) {
+            Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Datos;
+    }
+    
     ResultSet Consultar2(String tabla, String campo1, String campo2) {
         try {
             Datos= stmt.executeQuery("SELECT * FROM "+ tabla +" WHERE "+campo1+"='"+campo2+"'");
@@ -71,6 +89,14 @@ public class conexion {
             Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);
         }
         return Datos;
+    }
+    
+    public void Eliminar(String tabla, String campo1,String campo2){
+        try {            
+            stmt.execute("DELETE FROM "+ tabla +" WHERE "+campo1+ "='"+campo2+"'");
+        } catch (SQLException ex) {
+            Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
