@@ -1,3 +1,21 @@
+
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.*;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,13 +28,74 @@
  */
 public class ventanaSolicitar extends javax.swing.JFrame {
 
+    boolean validacion = true;
+    conexion con;
+    DefaultTableModel modelo;
+    private String accion, id_actualizar,sql,mensaje;
+    String campoconsulta;
     /**
      * Creates new form ventanaSolicitar
      */
     public ventanaSolicitar() {
         initComponents();
         this.setLocationRelativeTo(null);
+        primeraCarga();
+        String[] titulos={"ID","Nombre","Marca","Tipo","Motivo"};
+        modelo = new DefaultTableModel(null,titulos);
+        tablaAgregados.setModel(modelo);
     }
+    
+    public void cargarTabla(String valor, String campo){
+        String[] titulos={"ID","Nombre","Marca","Color","Clasificación"};
+
+        String[] registros= new String[8];
+        modelo = new DefaultTableModel(null,titulos);
+        try {
+            //Mostrar registros en la tabla
+            con = new conexion();
+            ResultSet consulta= con.ConsultarSolicitud("productos", campo, valor);
+            while(consulta.next()){
+                registros[0] = consulta.getString("idproductos");
+                registros[2] = consulta.getString("nom_pro");
+                registros[3] = consulta.getString("mar_pro");
+                registros[5] = consulta.getString("col_pro");
+                registros[6] = consulta.getString("nom_clas");
+                modelo.addRow(registros);               
+            }
+            //Mostrar titulos de la tabla
+            tablaInventario.setModel(modelo);
+            
+        } catch (SQLException ex) {    
+            JOptionPane.showMessageDialog(null,ex);
+        }
+    }
+    
+    private void primeraCarga(){
+        String[] titulos={"ID","Nombre","Marca","Color","Clasificación"};;
+
+        String[] registros= new String[5];
+        modelo = new DefaultTableModel(null,titulos);
+        try {
+            //Mostrar registros en la tabla
+            con = new conexion();
+            ResultSet consulta= con.primerCargaSolic();
+            while(consulta.next()){
+                registros[0] = consulta.getString("idproductos");
+                registros[1] = consulta.getString("nom_pro");
+                registros[2] = consulta.getString("mar_pro");
+                registros[3] = consulta.getString("col_pro");
+                registros[4] = consulta.getString("nom_clas");
+                modelo.addRow(registros);               
+            }
+            //Mostrar titulos de la tabla
+            tablaInventario.setModel(modelo);
+            
+        } catch (SQLException ex) {    
+            JOptionPane.showMessageDialog(null,ex);
+        }
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -44,9 +123,14 @@ public class ventanaSolicitar extends javax.swing.JFrame {
         agregarBtn = new javax.swing.JButton();
         buscarBtn = new javax.swing.JButton();
         cancelarBtn = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        tipoCombo = new javax.swing.JComboBox<>();
+        buscarCombo = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        motivoField = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -91,7 +175,7 @@ public class ventanaSolicitar extends javax.swing.JFrame {
         panelUsuarios.setOpaque(false);
         panelUsuarios.setLayout(null);
 
-        tablaAgregados.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        tablaAgregados.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tablaAgregados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -106,24 +190,34 @@ public class ventanaSolicitar extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tablaAgregados);
 
         panelUsuarios.add(jScrollPane1);
-        jScrollPane1.setBounds(70, 410, 1000, 180);
+        jScrollPane1.setBounds(400, 390, 670, 210);
 
         barraBusqueda.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        barraBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                barraBusquedaKeyTyped(evt);
+            }
+        });
         panelUsuarios.add(barraBusqueda);
         barraBusqueda.setBounds(70, 120, 270, 40);
 
         removerBtn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         removerBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Remover.png"))); // NOI18N
+        removerBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removerBtnActionPerformed(evt);
+            }
+        });
         panelUsuarios.add(removerBtn);
-        removerBtn.setBounds(600, 360, 45, 40);
+        removerBtn.setBounds(340, 510, 45, 40);
 
         jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel22.setText("Usuarios del Sistema");
+        jLabel22.setText("Inventario del Sistema");
         panelUsuarios.add(jLabel22);
-        jLabel22.setBounds(70, 40, 480, 90);
+        jLabel22.setBounds(70, 70, 480, 40);
 
-        tablaInventario.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        tablaInventario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tablaInventario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -142,38 +236,81 @@ public class ventanaSolicitar extends javax.swing.JFrame {
 
         enviarBtn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         enviarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Enviar.png"))); // NOI18N
+        enviarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enviarBtnActionPerformed(evt);
+            }
+        });
         panelUsuarios.add(enviarBtn);
         enviarBtn.setBounds(790, 120, 125, 40);
 
         agregarBtn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         agregarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Agregar.png"))); // NOI18N
+        agregarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregarBtnActionPerformed(evt);
+            }
+        });
         panelUsuarios.add(agregarBtn);
-        agregarBtn.setBounds(520, 360, 45, 40);
+        agregarBtn.setBounds(340, 460, 45, 40);
 
         buscarBtn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         buscarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Buscar.png"))); // NOI18N
+        buscarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarBtnActionPerformed(evt);
+            }
+        });
         panelUsuarios.add(buscarBtn);
-        buscarBtn.setBounds(380, 120, 125, 40);
+        buscarBtn.setBounds(570, 120, 125, 40);
 
         cancelarBtn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cancelarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Cancelar.png"))); // NOI18N
+        cancelarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarBtnActionPerformed(evt);
+            }
+        });
         panelUsuarios.add(cancelarBtn);
         cancelarBtn.setBounds(940, 120, 125, 40);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/BackgroundGeneral.png"))); // NOI18N
-        panelUsuarios.add(jLabel1);
-        jLabel1.setBounds(0, 0, 1110, 640);
+        tipoCombo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        tipoCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nuevo", "Prestamo", "Remplazo", "Como Dato", " " }));
+        panelUsuarios.add(tipoCombo);
+        tipoCombo.setBounds(130, 390, 190, 40);
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nuevo", "Prestamo", "Remplazo", "Como Dato", " " }));
-        panelUsuarios.add(jComboBox1);
-        jComboBox1.setBounds(530, 120, 190, 40);
+        buscarCombo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        buscarCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "ID", "Clasificación", "Marca", " " }));
+        panelUsuarios.add(buscarCombo);
+        buscarCombo.setBounds(360, 120, 190, 40);
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setText("Motivo de la Solicitud:");
+        panelUsuarios.add(jLabel2);
+        jLabel2.setBounds(70, 430, 160, 40);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel4.setText("Instituto Estatal Electoral de Nayarit");
         panelUsuarios.add(jLabel4);
         jLabel4.setBounds(70, 0, 630, 40);
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setText("Tipo:");
+        panelUsuarios.add(jLabel3);
+        jLabel3.setBounds(70, 390, 50, 40);
+
+        motivoField.setColumns(20);
+        motivoField.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        motivoField.setRows(5);
+        jScrollPane3.setViewportView(motivoField);
+
+        panelUsuarios.add(jScrollPane3);
+        jScrollPane3.setBounds(70, 470, 250, 130);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/BackgroundGeneral.png"))); // NOI18N
+        panelUsuarios.add(jLabel1);
+        jLabel1.setBounds(0, 0, 1110, 640);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -211,6 +348,102 @@ public class ventanaSolicitar extends javax.swing.JFrame {
       
     }//GEN-LAST:event_inventarioBtnActionPerformed
 
+    private void buscarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBtnActionPerformed
+        String campo = (String)buscarCombo.getSelectedItem();
+        switch(campo){
+                case "Nombre":
+                    cargarTabla("nom_pro",barraBusqueda.getText());
+                    break;
+                case "ID":
+                    cargarTabla("idproductos",barraBusqueda.getText());
+                    break;
+                case "Clasificación":
+                    cargarTabla("nom_clas",barraBusqueda.getText());
+                    break;
+                case "Marca":
+                    cargarTabla("mar_pro",barraBusqueda.getText());
+                    break;
+                default:
+                    break;
+        }
+    }//GEN-LAST:event_buscarBtnActionPerformed
+
+    private void barraBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_barraBusquedaKeyTyped
+        String campo = (String)buscarCombo.getSelectedItem();
+        char tecla = evt.getKeyChar();
+        if (campo=="Nombre" || campo=="Clasificación" || campo=="Marca"){
+            if((tecla<'a' || tecla>'z') && (tecla<'A' || tecla>'Z')){
+                evt.consume();;
+            }
+        }else{
+            if(tecla<'0' || tecla>'9'){
+                evt.consume();;
+            }
+        }
+    }//GEN-LAST:event_barraBusquedaKeyTyped
+
+    private void enviarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarBtnActionPerformed
+        int totalIndex = tablaAgregados.getRowCount();
+        if (tablaAgregados.getRowCount()==0){
+            JOptionPane.showMessageDialog(null, "No hay elementos para Solicitar");
+        }else{
+            try{
+                PreparedStatement pst;
+                System.out.println("Previo a conexion..."); 
+                con = new conexion();
+                for(int i=0; i<totalIndex;i++){
+                    sql= "INSERT INTO notificaciones(idproductos, nom_pro, mar_pro, mot_sol, tipo_sol)"+" VALUES(?,?,?,?,?)";
+                    mensaje="Los datos se han insertado";
+
+                    pst=con.conectar.prepareStatement(sql);
+                    pst.setString(1, (String)tablaAgregados.getValueAt(i, 0));
+                    pst.setString(1, (String)tablaAgregados.getValueAt(i, 1));
+                    pst.setString(1, (String)tablaAgregados.getValueAt(i, 2));
+                    pst.setString(1, (String)tablaAgregados.getValueAt(i, 3));
+                    pst.setString(1, (String)tablaAgregados.getValueAt(i, 4));
+                }
+            }catch (SQLException ex) {
+                System.out.println("Entró a catch...");
+                JOptionPane.showMessageDialog(null, ex);
+            }
+        }
+    }//GEN-LAST:event_enviarBtnActionPerformed
+
+    private void cancelarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarBtnActionPerformed
+        this.setVisible(false);
+        new ventanaInicio().setVisible(true);
+    }//GEN-LAST:event_cancelarBtnActionPerformed
+
+    private void agregarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarBtnActionPerformed
+        int index = tablaInventario.getSelectedRow();
+        modelo = new DefaultTableModel();
+        String[] registros = new String [5];
+        if (index==(-1)){
+            JOptionPane.showMessageDialog(null, "No se a seleccionado un articulo");
+        }else if(motivoField.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "No se a especificado motivo de la solicitud");
+        }else{
+            registros[0] = (String)tablaInventario.getValueAt(index, 0);
+            registros[1] = (String)tablaInventario.getValueAt(index, 1);
+            registros[2] = (String)tablaInventario.getValueAt(index, 2);
+            registros[0] = (String)tipoCombo.getSelectedItem();
+            registros[0] = motivoField.getText();
+            modelo.addRow(registros);
+            tablaAgregados.setModel(modelo);
+        }
+    }//GEN-LAST:event_agregarBtnActionPerformed
+
+    private void removerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerBtnActionPerformed
+        int index = tablaAgregados.getSelectedRow();
+        modelo = new DefaultTableModel();
+        if(index==(-1)){
+            JOptionPane.showMessageDialog(null, "No se ha seleccionado un articulo");
+        }else{
+            modelo.removeRow(index);
+            tablaAgregados.setModel(modelo);
+        }
+    }//GEN-LAST:event_removerBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -245,6 +478,7 @@ public class ventanaSolicitar extends javax.swing.JFrame {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BarraLatera;
@@ -252,20 +486,26 @@ public class ventanaSolicitar extends javax.swing.JFrame {
     private javax.swing.JButton atrasBtn;
     private javax.swing.JTextField barraBusqueda;
     private javax.swing.JButton buscarBtn;
+    private javax.swing.JComboBox<String> buscarCombo;
     private javax.swing.JButton cancelarBtn;
     private javax.swing.JButton enviarBtn;
     private javax.swing.JButton inventarioBtn;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel logo;
+    private javax.swing.JTextArea motivoField;
     private javax.swing.JPanel panelUsuarios;
     private javax.swing.JButton removerBtn;
     private javax.swing.JTable tablaAgregados;
     private javax.swing.JTable tablaInventario;
+    private javax.swing.JComboBox<String> tipoCombo;
     // End of variables declaration//GEN-END:variables
 }
+

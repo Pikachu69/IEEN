@@ -40,6 +40,21 @@ CREATE TABLE IF NOT EXISTS `inventario`.`clasificacion` (
   PRIMARY KEY (`id_clas`))
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `inventario`.`notificaciones`
+-- -----------------------------------------------------
+/*DROP TABLE IF EXISTS `inventario`.`notificaciones` ;
+
+CREATE TABLE IF NOT EXISTS `inventario`.`notificaciones` (
+  `idproductos` INT NOT NULL,
+  `nom_pro` VARCHAR(45) NULL,
+  `mar_pro` VARCHAR(45) NULL,
+  `mot_sol` VARCHAR(200) NULL,
+  `tipo_sol` VARCHAR (15) NULL
+ -- `depar` VARCHAR(40) NULL
+ENGINE = InnoDB;
+*/
+
 
 -- -----------------------------------------------------
 -- Table `inventario`.`productos`

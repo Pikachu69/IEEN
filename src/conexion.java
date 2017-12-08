@@ -81,6 +81,23 @@ public class conexion {
         }
         return Datos;
     }
+    public ResultSet ConsultarSolicitud(String tabla, String campo,String valor){
+        try {
+            Datos= stmt.executeQuery("SELECT idproductos, nom_pro, mar_pro, col_pro, nom_clas from productos inner join clasificacion on productos.clasificacion_id_clas = clasificacion.id_clas WHERE "+campo+" LIKE '"+valor+"%'");//'R%'
+        } catch (SQLException ex) {
+            Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Datos;
+    }
+    public ResultSet primerCargaSolic() throws SQLException{
+        Datos= stmt.executeQuery("SELECT idproductos, nom_pro, mar_pro, col_pro, nom_clas from productos inner join clasificacion on productos.clasificacion_id_clas = clasificacion.id_clas");//'R%'
+        return Datos1;
+    }
+    
+    public ResultSet primerCargaNot() throws SQLException{
+        Datos1= stmt.executeQuery("select idproductos, nom_pro, mar_pro, mot_pro, tipo_pro from notificaciones");
+        return Datos1;
+    }
     
     ResultSet Consultar2(String tabla, String campo1, String campo2) {
         try {
