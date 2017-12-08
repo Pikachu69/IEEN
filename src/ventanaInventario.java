@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -88,7 +90,6 @@ public class ventanaInventario extends javax.swing.JFrame {
         modeloAltaField = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         colorAltaField = new javax.swing.JTextField();
-        fechaComAltaField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         noFacAltaField = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
@@ -118,6 +119,7 @@ public class ventanaInventario extends javax.swing.JFrame {
         ID1 = new javax.swing.JLabel();
         ID2 = new javax.swing.JLabel();
         comboClas = new javax.swing.JComboBox<>();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         panelInventario = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaInventario = new javax.swing.JTable();
@@ -225,9 +227,9 @@ public class ventanaInventario extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setText("Sub Categoria:");
         panelAlta.add(jLabel3);
-        jLabel3.setBounds(300, 220, 120, 30);
+        jLabel3.setBounds(340, 220, 120, 30);
         panelAlta.add(subcatAltaField);
-        subcatAltaField.setBounds(430, 220, 220, 30);
+        subcatAltaField.setBounds(470, 220, 220, 30);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("Descripción:");
@@ -241,14 +243,14 @@ public class ventanaInventario extends javax.swing.JFrame {
         panelAlta.add(jScrollPane2);
         jScrollPane2.setBounds(600, 270, 350, 70);
         panelAlta.add(marcaAltaField);
-        marcaAltaField.setBounds(150, 410, 170, 30);
+        marcaAltaField.setBounds(190, 410, 170, 30);
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel12.setText("Marca:");
         panelAlta.add(jLabel12);
-        jLabel12.setBounds(70, 410, 110, 30);
+        jLabel12.setBounds(130, 410, 110, 30);
         panelAlta.add(noSerieAltaField);
-        noSerieAltaField.setBounds(740, 410, 210, 30);
+        noSerieAltaField.setBounds(720, 410, 230, 30);
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel13.setText("No. de Serie:");
@@ -258,44 +260,42 @@ public class ventanaInventario extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setText("Modelo:");
         panelAlta.add(jLabel6);
-        jLabel6.setBounds(340, 410, 90, 30);
+        jLabel6.setBounds(390, 410, 90, 30);
         panelAlta.add(modeloAltaField);
-        modeloAltaField.setBounds(450, 410, 130, 30);
+        modeloAltaField.setBounds(470, 410, 130, 30);
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel14.setText("Color:");
         panelAlta.add(jLabel14);
-        jLabel14.setBounds(70, 320, 110, 30);
+        jLabel14.setBounds(90, 320, 110, 30);
         panelAlta.add(colorAltaField);
-        colorAltaField.setBounds(140, 320, 300, 30);
-        panelAlta.add(fechaComAltaField);
-        fechaComAltaField.setBounds(190, 360, 120, 30);
+        colorAltaField.setBounds(150, 320, 300, 30);
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel8.setText("Fecha compra:");
         panelAlta.add(jLabel8);
         jLabel8.setBounds(70, 360, 120, 30);
         panelAlta.add(noFacAltaField);
-        noFacAltaField.setBounds(440, 360, 130, 30);
+        noFacAltaField.setBounds(470, 360, 130, 30);
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel16.setText("No. Factura:");
         panelAlta.add(jLabel16);
-        jLabel16.setBounds(340, 360, 120, 30);
+        jLabel16.setBounds(370, 360, 120, 30);
         panelAlta.add(cantidadAltaField);
-        cantidadAltaField.setBounds(150, 460, 170, 30);
+        cantidadAltaField.setBounds(200, 460, 120, 30);
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel17.setText("Cantidad:");
         panelAlta.add(jLabel17);
-        jLabel17.setBounds(70, 460, 120, 30);
+        jLabel17.setBounds(110, 460, 120, 30);
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel9.setText("Importe:");
         panelAlta.add(jLabel9);
-        jLabel9.setBounds(610, 360, 80, 30);
+        jLabel9.setBounds(640, 360, 80, 30);
         panelAlta.add(importeAltaField);
-        importeAltaField.setBounds(690, 360, 170, 30);
+        importeAltaField.setBounds(720, 360, 230, 30);
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel18.setText("Observaciones:");
@@ -405,6 +405,8 @@ public class ventanaInventario extends javax.swing.JFrame {
         });
         panelAlta.add(comboClas);
         comboClas.setBounds(470, 160, 160, 30);
+        panelAlta.add(jDateChooser1);
+        jDateChooser1.setBounds(190, 360, 170, 30);
 
         areaAcción.add(panelAlta);
         panelAlta.setBounds(0, 0, 1110, 810);
@@ -577,7 +579,7 @@ public class ventanaInventario extends javax.swing.JFrame {
     Nombre = nombreAltaField.getText();
     Color = colorAltaField.getText();
     Descripcion = descAltaField.getText();
-    Fecha_compra = fechaComAltaField.getText();
+    Fecha_compra = getFecha();
     No_Factura = noFacAltaField.getText();
     importe = Double.valueOf(importeAltaField.getText());
     marca = marcaAltaField.getText();
@@ -781,7 +783,7 @@ public class ventanaInventario extends javax.swing.JFrame {
                 colorAltaField.setText(consulta.getString("col_pro"));
                 placaAltaField.setText(consulta.getString("pla_pro"));
                 motorAltaField.setText(consulta.getString("nomot_pro"));
-                fechaComAltaField.setText(consulta.getString("fechcompra_pro"));
+                jDateChooser1.setDate(consulta.getDate("fechcompra_pro"));
                 noFacAltaField.setText(consulta.getString("nofact_pro"));
                 importeAltaField.setText(consulta.getString("imp_pro"));
                 obsAltaField.setText(consulta.getString("obs_pro"));
@@ -794,6 +796,15 @@ public class ventanaInventario extends javax.swing.JFrame {
             }
             
         } catch (SQLException ex) {}
+    }
+    
+    private String getFecha(){
+       String a,m,d,fecha;
+       
+       a=""+jDateChooser1.getCalendar().get(Calendar.YEAR);
+       m=""+jDateChooser1.getCalendar().get(Calendar.MONTH);
+       d=""+jDateChooser1.getCalendar().get(Calendar.DAY_OF_MONTH); 
+       return fecha=a+"-"+m+"-"+d;
     }
     
     private void cargarNuevoProducto(){
@@ -867,12 +878,12 @@ public class ventanaInventario extends javax.swing.JFrame {
     private javax.swing.JButton darDeAltaBtn;
     private javax.swing.JButton darDeBajaBtn;
     private javax.swing.JTextArea descAltaField;
-    private javax.swing.JTextField fechaComAltaField;
     private javax.swing.JButton guardarAltaBtn;
     private javax.swing.JTextField idAltaField;
     private javax.swing.JTextField importeAltaField;
     private javax.swing.JButton inventarioBtn;
     private javax.swing.JButton jButton1;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -926,7 +937,7 @@ public class ventanaInventario extends javax.swing.JFrame {
     nombreAltaField.setText("");
     colorAltaField.setText("");
     descAltaField.setText("");
-    fechaComAltaField.setText("");
+    jDateChooser1.setCalendar(new GregorianCalendar());
     noFacAltaField.setText("");
     importeAltaField.setText("");
     marcaAltaField.setText("");
