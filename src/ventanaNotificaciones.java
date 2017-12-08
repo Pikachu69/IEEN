@@ -1,3 +1,9 @@
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,12 +16,44 @@
  */
 public class ventanaNotificaciones extends javax.swing.JFrame {
 
+    
+    boolean validacion = true;
+    conexion con;
+    DefaultTableModel modelo;
+    private String accion, id_actualizar,sql,mensaje;
+    String campoconsulta;
+    
     /**
      * Creates new form ventanaNotificaciones
      */
     public ventanaNotificaciones() {
         initComponents();
         this.setLocationRelativeTo(null);
+    }
+    
+    public void cargarTabla(String valor, String campo){
+        String[] titulos={"ID","Nombre","Marca","Tipo","Motivo"};
+
+        String[] registros= new String[8];
+        modelo = new DefaultTableModel(null,titulos);
+        try {
+            //Mostrar registros en la tabla
+            con = new conexion();
+            ResultSet consulta= con.primerCargaNot();
+            while(consulta.next()){
+                registros[0] = consulta.getString("idproductos");
+                registros[2] = consulta.getString("nom_pro");
+                registros[3] = consulta.getString("mar_pro");
+                registros[5] = consulta.getString("mot_sol");
+                registros[6] = consulta.getString("tipo_sol");
+                modelo.addRow(registros);               
+            }
+            //Mostrar titulos de la tabla
+            tablaNoti.setModel(modelo);
+            
+        } catch (SQLException ex) {    
+            JOptionPane.showMessageDialog(null,ex);
+        }
     }
 
     /**
@@ -35,7 +73,7 @@ public class ventanaNotificaciones extends javax.swing.JFrame {
         panelNotificaciones = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaNoti = new javax.swing.JTable();
         jLabel22 = new javax.swing.JLabel();
         labelInventario = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -75,7 +113,7 @@ public class ventanaNotificaciones extends javax.swing.JFrame {
         panelNotificaciones.add(jLabel1);
         jLabel1.setBounds(20, 90, 480, 20);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaNoti.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -86,7 +124,7 @@ public class ventanaNotificaciones extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaNoti);
 
         panelNotificaciones.add(jScrollPane1);
         jScrollPane1.setBounds(20, 130, 550, 650);
@@ -174,9 +212,9 @@ public class ventanaNotificaciones extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel labelInventario;
     private javax.swing.JLabel logo;
     private javax.swing.JPanel panelNotificaciones;
+    private javax.swing.JTable tablaNoti;
     // End of variables declaration//GEN-END:variables
 }

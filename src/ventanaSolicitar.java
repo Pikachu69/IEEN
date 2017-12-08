@@ -40,9 +40,7 @@ public class ventanaSolicitar extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         primeraCarga();
-        String[] titulos={"ID","Nombre","Marca","Tipo","Motivo"};
-        modelo = new DefaultTableModel(null,titulos);
-        tablaAgregados.setModel(modelo);
+        primCargarTablaAgre();
     }
     
     public void cargarTabla(String valor, String campo){
@@ -68,6 +66,12 @@ public class ventanaSolicitar extends javax.swing.JFrame {
         } catch (SQLException ex) {    
             JOptionPane.showMessageDialog(null,ex);
         }
+    }
+    
+    public void primCargarTablaAgre(){
+        String[] titulos={"ID","Nombre","Marca","Tipo","Motivo"};
+        modelo = new DefaultTableModel(null,titulos);
+        tablaAgregados.setModel(modelo);
     }
     
     private void primeraCarga(){
@@ -373,11 +377,11 @@ public class ventanaSolicitar extends javax.swing.JFrame {
         char tecla = evt.getKeyChar();
         if (campo=="Nombre" || campo=="Clasificación" || campo=="Marca"){
             if((tecla<'a' || tecla>'z') && (tecla<'A' || tecla>'Z')){
-                evt.consume();;
+                evt.consume();
             }
         }else{
             if(tecla<'0' || tecla>'9'){
-                evt.consume();;
+                evt.consume();
             }
         }
     }//GEN-LAST:event_barraBusquedaKeyTyped
