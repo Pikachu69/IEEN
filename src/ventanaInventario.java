@@ -216,6 +216,12 @@ public class ventanaInventario extends javax.swing.JFrame {
         lblnumeral.setText("Numeral:");
         panelAlta.add(lblnumeral);
         lblnumeral.setBounds(70, 220, 110, 30);
+
+        nombreAltaField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nombreAltaFieldKeyTyped(evt);
+            }
+        });
         panelAlta.add(nombreAltaField);
         nombreAltaField.setBounds(150, 270, 300, 30);
 
@@ -228,6 +234,12 @@ public class ventanaInventario extends javax.swing.JFrame {
         jLabel3.setText("Sub Categoria:");
         panelAlta.add(jLabel3);
         jLabel3.setBounds(340, 220, 120, 30);
+
+        subcatAltaField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                subcatAltaFieldKeyPressed(evt);
+            }
+        });
         panelAlta.add(subcatAltaField);
         subcatAltaField.setBounds(470, 220, 220, 30);
 
@@ -242,6 +254,12 @@ public class ventanaInventario extends javax.swing.JFrame {
 
         panelAlta.add(jScrollPane2);
         jScrollPane2.setBounds(600, 270, 350, 70);
+
+        marcaAltaField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                marcaAltaFieldKeyTyped(evt);
+            }
+        });
         panelAlta.add(marcaAltaField);
         marcaAltaField.setBounds(190, 410, 170, 30);
 
@@ -249,6 +267,12 @@ public class ventanaInventario extends javax.swing.JFrame {
         jLabel12.setText("Marca:");
         panelAlta.add(jLabel12);
         jLabel12.setBounds(130, 410, 110, 30);
+
+        noSerieAltaField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                noSerieAltaFieldKeyTyped(evt);
+            }
+        });
         panelAlta.add(noSerieAltaField);
         noSerieAltaField.setBounds(720, 410, 230, 30);
 
@@ -268,6 +292,12 @@ public class ventanaInventario extends javax.swing.JFrame {
         jLabel14.setText("Color:");
         panelAlta.add(jLabel14);
         jLabel14.setBounds(90, 320, 110, 30);
+
+        colorAltaField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                colorAltaFieldKeyTyped(evt);
+            }
+        });
         panelAlta.add(colorAltaField);
         colorAltaField.setBounds(150, 320, 300, 30);
 
@@ -275,6 +305,12 @@ public class ventanaInventario extends javax.swing.JFrame {
         jLabel8.setText("Fecha compra:");
         panelAlta.add(jLabel8);
         jLabel8.setBounds(70, 360, 120, 30);
+
+        noFacAltaField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                noFacAltaFieldKeyTyped(evt);
+            }
+        });
         panelAlta.add(noFacAltaField);
         noFacAltaField.setBounds(470, 360, 130, 30);
 
@@ -282,6 +318,12 @@ public class ventanaInventario extends javax.swing.JFrame {
         jLabel16.setText("No. Factura:");
         panelAlta.add(jLabel16);
         jLabel16.setBounds(370, 360, 120, 30);
+
+        cantidadAltaField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cantidadAltaFieldKeyTyped(evt);
+            }
+        });
         panelAlta.add(cantidadAltaField);
         cantidadAltaField.setBounds(200, 460, 120, 30);
 
@@ -294,6 +336,12 @@ public class ventanaInventario extends javax.swing.JFrame {
         jLabel9.setText("Importe:");
         panelAlta.add(jLabel9);
         jLabel9.setBounds(640, 360, 80, 30);
+
+        importeAltaField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                importeAltaFieldKeyTyped(evt);
+            }
+        });
         panelAlta.add(importeAltaField);
         importeAltaField.setBounds(720, 360, 230, 30);
 
@@ -308,6 +356,12 @@ public class ventanaInventario extends javax.swing.JFrame {
 
         panelAlta.add(jScrollPane3);
         jScrollPane3.setBounds(470, 460, 480, 90);
+
+        cantMinAltaField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cantMinAltaFieldKeyTyped(evt);
+            }
+        });
         panelAlta.add(cantMinAltaField);
         cantMinAltaField.setBounds(200, 510, 120, 30);
 
@@ -337,6 +391,12 @@ public class ventanaInventario extends javax.swing.JFrame {
         jLabel7.setBounds(40, 30, 130, 30);
         panelAuto.add(placaAltaField);
         placaAltaField.setBounds(130, 30, 270, 30);
+
+        motorAltaField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                motorAltaFieldKeyTyped(evt);
+            }
+        });
         panelAuto.add(motorAltaField);
         motorAltaField.setBounds(130, 80, 270, 30);
 
@@ -354,8 +414,20 @@ public class ventanaInventario extends javax.swing.JFrame {
         jLabel21.setText("Kilometraje:");
         panelAuto.add(jLabel21);
         jLabel21.setBounds(460, 30, 100, 30);
+
+        kilomAltaField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                kilomAltaFieldKeyTyped(evt);
+            }
+        });
         panelAuto.add(kilomAltaField);
         kilomAltaField.setBounds(570, 30, 280, 30);
+
+        kilomMaxAltaField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                kilomMaxAltaFieldKeyTyped(evt);
+            }
+        });
         panelAuto.add(kilomMaxAltaField);
         kilomMaxAltaField.setBounds(620, 80, 230, 30);
 
@@ -738,6 +810,65 @@ public class ventanaInventario extends javax.swing.JFrame {
         darDeBajaBtn.setEnabled(false);
     }//GEN-LAST:event_darDeBajaBtnActionPerformed
 
+    private void subcatAltaFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_subcatAltaFieldKeyPressed
+        char c = evt.getKeyChar();
+    }//GEN-LAST:event_subcatAltaFieldKeyPressed
+
+    private void noFacAltaFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_noFacAltaFieldKeyTyped
+char c = evt.getKeyChar();
+if(c<'0' || c>'9') evt.consume();// TODO add your handling code here:
+    }//GEN-LAST:event_noFacAltaFieldKeyTyped
+
+    private void importeAltaFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_importeAltaFieldKeyTyped
+char c = evt.getKeyChar();
+if(c<'0' || c>'9') evt.consume();        // TODO add your handling code here:
+    }//GEN-LAST:event_importeAltaFieldKeyTyped
+
+    private void cantidadAltaFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cantidadAltaFieldKeyTyped
+char c = evt.getKeyChar();
+if(c<'0' || c>'9') evt.consume();        // TODO add your handling code here:
+    }//GEN-LAST:event_cantidadAltaFieldKeyTyped
+
+    private void cantMinAltaFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cantMinAltaFieldKeyTyped
+char c = evt.getKeyChar();
+if(c<'0' || c>'9') evt.consume();        // TODO add your handling code here:
+    }//GEN-LAST:event_cantMinAltaFieldKeyTyped
+
+    private void kilomAltaFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kilomAltaFieldKeyTyped
+char c = evt.getKeyChar();
+if(c<'0' || c>'9') evt.consume();        // TODO add your handling code here:
+    }//GEN-LAST:event_kilomAltaFieldKeyTyped
+
+    private void kilomMaxAltaFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kilomMaxAltaFieldKeyTyped
+char c = evt.getKeyChar();
+if(c<'0' || c>'9') evt.consume();        // TODO add your handling code here:
+    }//GEN-LAST:event_kilomMaxAltaFieldKeyTyped
+
+    private void motorAltaFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_motorAltaFieldKeyTyped
+char c = evt.getKeyChar();
+if(c<'0' || c>'9') evt.consume();        // TODO add your handling code here:
+    }//GEN-LAST:event_motorAltaFieldKeyTyped
+
+    private void nombreAltaFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreAltaFieldKeyTyped
+char c = evt.getKeyChar();
+if((c < 'a' || c > 'z') && (c < 'A' || c > 'Z')) evt.consume();
+    }//GEN-LAST:event_nombreAltaFieldKeyTyped
+
+    private void colorAltaFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_colorAltaFieldKeyTyped
+char c = evt.getKeyChar();
+if((c < 'a' || c > 'z') && (c < 'A' || c > 'Z')) evt.consume();        // TODO add your handling code here:
+    }//GEN-LAST:event_colorAltaFieldKeyTyped
+
+    private void marcaAltaFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_marcaAltaFieldKeyTyped
+char c = evt.getKeyChar();
+if((c < 'a' || c > 'z') && (c < 'A' || c > 'Z')) evt.consume();        // TODO add your handling code here:
+    }//GEN-LAST:event_marcaAltaFieldKeyTyped
+
+    private void noSerieAltaFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_noSerieAltaFieldKeyTyped
+char c = evt.getKeyChar();
+//c.toUpperCase();// TODO add your handling code here:
+    }//GEN-LAST:event_noSerieAltaFieldKeyTyped
+
     public void cargarTabla(String valor){
         String[] titulos={"ID","clave","Nombre","Marca","Serie","Color","Placas","Stock"};
 
@@ -814,9 +945,15 @@ public class ventanaInventario extends javax.swing.JFrame {
             ResultSet consulta = con.ConsultarNuevoID();
             //Recorre registros para mostrarlos
             while(consulta.next()){
+                try{
                 id = Integer.parseInt(consulta.getString("id"))+1;
                 numeral = Integer.parseInt(consulta.getString("numeral"))+1;
+                }catch(NumberFormatException e){
+                    id = 1;
+                    numeral = 1;
+                }
             }
+           
             idAltaField.setText(""+id);
             if(numeral<10){
             numeralAltaField.setText("000"+numeral);
