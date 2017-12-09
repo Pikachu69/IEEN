@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  * @author Eduardo
  */
 public class conexion {
-    private static final String url = "jdbc:mysql://localhost:3306/inventario?"+"user=root&password=lalitro19";
+    private static final String url = "jdbc:mysql://localhost:3306/inventario?"+"user=root&password=angelo";
     Statement stmt;
     Connection conectar;
     String fila[];
@@ -60,13 +60,16 @@ public class conexion {
     
     
     public ResultSet primerCarga() throws SQLException{
-        Datos1= stmt.executeQuery("select idproductos, concat(fol_clas,con_pro,subcat_pro) as clave, nom_pro, mar_pro, ser_pro, col_pro, pla_pro as placas, stock_pro from productos inner join clasificacion on productos.clasificacion_id_clas = clasificacion.id_clas;");
+        Datos1= stmt.executeQuery("SELECT idproductos, concat(fol_clas,con_pro,subcat_pro) AS clave, nom_pro, mar_pro, ser_pro, col_pro, pla_pro as placas, stock_pro "
+                                + "FROM productos "
+                                + "INNER JOIN clasificacion ON productos.clasificacion_id_clas = clasificacion.id_clas;");
         return Datos1;
     }
     
     ResultSet ConsultarNuevoID() {
         try {
-            Datos= stmt.executeQuery("select max(idproductos) as id, max(con_pro) as numeral from productos;");
+            Datos= stmt.executeQuery("SELECT MAX(idproductos) AS id, MAX(con_pro) AS numeral "
+                                   + "FROM productos;");
         } catch (SQLException ex) {
             Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -75,7 +78,9 @@ public class conexion {
 
     public ResultSet Consultar1(String tabla, String campo,String valor){
         try {
-            Datos= stmt.executeQuery("SELECT idproductos, concat(fol_clas,con_pro,subcat_pro) as clave, nom_pro, mar_pro, ser_pro, col_pro, pla_pro as placas, stock_pro from productos inner join clasificacion on productos.clasificacion_id_clas = clasificacion.id_clas WHERE "+campo+" LIKE '"+valor+"%'");//'R%'
+            Datos= stmt.executeQuery("SELECT idproductos, concat(fol_clas,con_pro,subcat_pro) AS clave, nom_pro, mar_pro, ser_pro, col_pro, pla_pro as placas, stock_pro "
+                                    + "FROM productos "
+                                    + "INNER JOIN clasificacion ON productos.clasificacion_id_clas = clasificacion.id_clas WHERE "+campo+" LIKE '"+valor+"%'");//'R%'
         } catch (SQLException ex) {
             Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -83,25 +88,32 @@ public class conexion {
     }
     public ResultSet ConsultarSolicitud(String tabla, String campo,String valor){
         try {
-            Datos= stmt.executeQuery("SELECT idproductos, nom_pro, mar_pro, col_pro, nom_clas from productos inner join clasificacion on productos.clasificacion_id_clas = clasificacion.id_clas WHERE "+campo+" LIKE '"+valor+"%'");//'R%'
+            Datos= stmt.executeQuery("SELECT idproductos, nom_pro, mar_pro, col_pro, nom_clas "
+                                    + "FROM productos "
+                                    + "INNER JOIN clasificacion ON productos.clasificacion_id_clas = clasificacion.id_clas WHERE "+campo+" LIKE '"+valor+"%'");//'R%'
         } catch (SQLException ex) {
             Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);
         }
         return Datos;
     }
     public ResultSet primerCargaSolic() throws SQLException{
-        Datos= stmt.executeQuery("SELECT idproductos, nom_pro, mar_pro, col_pro, nom_clas from productos inner join clasificacion on productos.clasificacion_id_clas = clasificacion.id_clas");//'R%'
+        Datos1= stmt.executeQuery("SELECT idproductos, nom_pro, mar_pro, col_pro, nom_clas "
+                                + "FROM productos "
+                                + "INNER JOIN clasificacion ON productos.clasificacion_id_clas = clasificacion.id_clas");//'R%'
         return Datos1;
     }
     
     public ResultSet primerCargaNot() throws SQLException{
-        Datos1= stmt.executeQuery("select idproductos, nom_pro, mar_pro, mot_pro, tipo_pro from notificaciones");
+        Datos1= stmt.executeQuery("SELECT idproductos, nom_pro, mar_pro, mot_sol, tipo_sol, depar "
+                                + "FROM notificaciones");
         return Datos1;
     }
     
     ResultSet Consultar2(String tabla, String campo1, String campo2) {
         try {
-            Datos= stmt.executeQuery("SELECT * FROM "+ tabla +" WHERE "+campo1+"='"+campo2+"'");
+            Datos= stmt.executeQuery("SELECT * "
+                                    + "FROM "+ tabla +" "
+                                    + "WHERE "+campo1+"='"+campo2+"'");
         } catch (SQLException ex) {
             Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -110,7 +122,8 @@ public class conexion {
     
     public void Eliminar(String tabla, String campo1,String campo2){
         try {            
-            stmt.execute("DELETE FROM "+ tabla +" WHERE "+campo1+ "='"+campo2+"'");
+            stmt.execute("DELETE FROM "+ tabla +" "
+                        + "WHERE "+campo1+ "='"+campo2+"'");
         } catch (SQLException ex) {
             Logger.getLogger(conexion.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -29,12 +29,13 @@ public class ventanaNotificaciones extends javax.swing.JFrame {
     public ventanaNotificaciones() {
         initComponents();
         this.setLocationRelativeTo(null);
+         primerCargaNot();
     }
     
-    public void cargarTabla(String valor, String campo){
-        String[] titulos={"ID","Nombre","Marca","Tipo","Motivo"};
+    public void  primerCargaNot(){
+        String[] titulos={"ID","Nombre","Marca","Tipo","Motivo", "Departamento"};
 
-        String[] registros= new String[8];
+        String[] registros= new String[6];
         modelo = new DefaultTableModel(null,titulos);
         try {
             //Mostrar registros en la tabla
@@ -42,10 +43,11 @@ public class ventanaNotificaciones extends javax.swing.JFrame {
             ResultSet consulta= con.primerCargaNot();
             while(consulta.next()){
                 registros[0] = consulta.getString("idproductos");
-                registros[2] = consulta.getString("nom_pro");
-                registros[3] = consulta.getString("mar_pro");
-                registros[5] = consulta.getString("mot_sol");
-                registros[6] = consulta.getString("tipo_sol");
+                registros[1] = consulta.getString("nom_pro");
+                registros[2] = consulta.getString("mar_pro");
+                registros[3] = consulta.getString("mot_sol");
+                registros[4] = consulta.getString("tipo_sol");
+                registros[5] = consulta.getString("depar");
                 modelo.addRow(registros);               
             }
             //Mostrar titulos de la tabla

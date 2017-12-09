@@ -89,7 +89,7 @@ public class ventanaSolicitar extends javax.swing.JFrame {
                 registros[2] = consulta.getString("mar_pro");
                 registros[3] = consulta.getString("col_pro");
                 registros[4] = consulta.getString("nom_clas");
-                modelo.addRow(registros);               
+                modelo.addRow(registros);            
             }
             //Mostrar titulos de la tabla
             tablaInventario.setModel(modelo);

@@ -1,5 +1,6 @@
 
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -42,7 +43,7 @@ public class loginWindow extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         usuarioField = new javax.swing.JTextField();
         contraseñaField = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        enterBtn = new javax.swing.JButton();
         logo = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
 
@@ -69,18 +70,23 @@ public class loginWindow extends javax.swing.JFrame {
         contraseñaField.setForeground(new java.awt.Color(153, 153, 153));
         contraseñaField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         contraseñaField.setToolTipText("Contraseña");
+        contraseñaField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                contraseñaFieldKeyPressed(evt);
+            }
+        });
         jPanel1.add(contraseñaField);
         contraseñaField.setBounds(90, 400, 230, 40);
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Entrar.png"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        enterBtn.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        enterBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Entrar.png"))); // NOI18N
+        enterBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                enterBtnActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1);
-        jButton1.setBounds(135, 470, 150, 40);
+        jPanel1.add(enterBtn);
+        enterBtn.setBounds(135, 470, 150, 40);
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/n2.png"))); // NOI18N
         jPanel1.add(logo);
@@ -89,6 +95,7 @@ public class loginWindow extends javax.swing.JFrame {
         background.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         background.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/BackgroundLogin.png"))); // NOI18N
+        background.setOpaque(true);
         jPanel1.add(background);
         background.setBounds(0, 0, 410, 560);
 
@@ -106,7 +113,7 @@ public class loginWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void enterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterBtnActionPerformed
         if (usuarioField.getText().equals("admin") && contraseñaField.getText().equals("123")){
             new ventanaInicio().setVisible(true);
             this.setVisible(false);
@@ -116,7 +123,21 @@ public class loginWindow extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(null, "Error");
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_enterBtnActionPerformed
+
+    private void contraseñaFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contraseñaFieldKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            if (usuarioField.getText().equals("admin") && contraseñaField.getText().equals("123")){
+                new ventanaInicio().setVisible(true);
+                this.setVisible(false);
+            }else if (usuarioField.getText().equals("usuario") && contraseñaField.getText().equals("231")){
+                new ventanaInicioUsuario().setVisible(true);
+                this.setVisible(false);
+            }else{
+                JOptionPane.showMessageDialog(null, "Error");
+            }
+        }
+    }//GEN-LAST:event_contraseñaFieldKeyPressed
 
     /**
      * @param args the command line arguments
@@ -156,7 +177,7 @@ public class loginWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;
     private javax.swing.JTextField contraseñaField;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton enterBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel logo;

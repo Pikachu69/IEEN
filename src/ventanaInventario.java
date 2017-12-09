@@ -618,7 +618,7 @@ public class ventanaInventario extends javax.swing.JFrame {
         panelInventario.setVisible(false);
     }//GEN-LAST:event_modificarBtnActionPerformed
 
-    private boolean validacion(String Numeral, String Sub_cat, String Nombre, String Color, 
+    /*private boolean validacion(String Numeral, String Sub_cat, String Nombre, String Color, 
             String Descripcion, String Fecha_compra, String No_Factura, String importe, String marca, 
             String modelo, String no_serie, String cantidad, String observaciones, String cantidad_min, 
             String placa, String km, String motor, String km_max) {
@@ -632,11 +632,25 @@ public class ventanaInventario extends javax.swing.JFrame {
         }else {
             return validacion;
         }
+    }*/
+    private boolean validacion(){
+        if(numeralAltaField.getText().equals("") || subcatAltaField.getText().equals("") || nombreAltaField.getText().equals("") ||
+            colorAltaField.getText().equals("") || descAltaField.getText().equals("") || noFacAltaField.getText().equals("") ||
+            importeAltaField.getText().equals("") || marcaAltaField.getText().equals("") || modeloAltaField.getText().equals("") ||
+            noSerieAltaField.getText().equals("") || cantidadAltaField.getText().equals("") || obsAltaField.getText().equals("") ||
+            cantMinAltaField.getText().equals("") || placaAltaField.getText().equals("") || kilomAltaField.getText().equals("") ||
+            motorAltaField.getText().equals("") || kilomMaxAltaField.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Llene todos los campos");
+            return validacion = false;
+        }else{
+            return validacion = true;
+        }
     }
     private void guardarAltaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarAltaBtnActionPerformed
     inventarioBtn.setEnabled(true);
     modificarBtn.setEnabled(false);
     darDeAltaBtn.setEnabled(true);
+    
     String Numeral,Sub_cat,Nombre,Descripcion,marca,modelo,no_serie,Color,placa,motor,Fecha_compra,No_Factura,
            observaciones,km,km_max;
     int status,clasificacion,cantidad,cantidad_min;
@@ -668,7 +682,7 @@ public class ventanaInventario extends javax.swing.JFrame {
     //validacion(Numeral, Sub_cat, Nombre, Color, Descripcion, Fecha_compra, No_Factura, importe, marca, modelo,
       //         no_serie, cantidad, observaciones, cantidad_min, placa, km, motor, km_max);
     
-    //if(validacion == true){
+    if(validacion()){
          try {
              PreparedStatement pst;
             System.out.println("Previo a conexion..."); 
@@ -757,7 +771,7 @@ public class ventanaInventario extends javax.swing.JFrame {
            System.out.println("Entró a catch...");
            JOptionPane.showMessageDialog(null, ex);
         }
-   // }
+    }
   //  borrarCampos();
     }//GEN-LAST:event_guardarAltaBtnActionPerformed
 
@@ -770,7 +784,9 @@ public class ventanaInventario extends javax.swing.JFrame {
     }//GEN-LAST:event_comboClasActionPerformed
 
     private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
-    borrarCampos();
+        borrarCampos();        
+        panelAlta.setVisible(false);
+        panelInventario.setVisible(true);
     }//GEN-LAST:event_CancelarActionPerformed
 
     private void tablaInventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInventarioMouseClicked
