@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  * @author Eduardo
  */
 public class conexion {
-    private static final String url = "jdbc:mysql://localhost:3306/inventario?"+"user=root&password=angelo";
+    private static final String url = "jdbc:mysql://localhost:3306/inventario?"+"user=root&password=lalitro19";
     Statement stmt;
     Connection conectar;
     String fila[];

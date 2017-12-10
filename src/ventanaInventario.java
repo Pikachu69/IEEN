@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +31,7 @@ public class ventanaInventario extends javax.swing.JFrame {
     DefaultTableModel modelo;
     private String accion, id_actualizar,sql,mensaje;
     String campoconsulta;
+    int error;
     /**
      * Creates new form ventanaInventario
      */
@@ -617,35 +619,148 @@ public class ventanaInventario extends javax.swing.JFrame {
         panelAlta.setVisible(true);
         panelInventario.setVisible(false);
     }//GEN-LAST:event_modificarBtnActionPerformed
-
-    /*private boolean validacion(String Numeral, String Sub_cat, String Nombre, String Color, 
-            String Descripcion, String Fecha_compra, String No_Factura, String importe, String marca, 
-            String modelo, String no_serie, String cantidad, String observaciones, String cantidad_min, 
-            String placa, String km, String motor, String km_max) {
-        if(Numeral.equals("") || Sub_cat.equals("") || Nombre.equals("") || Color.equals("")
-           || Descripcion.equals("") || Fecha_compra.equals("") || No_Factura.equals("") || importe.equals("") || marca.equals("") ||
-           no_serie.equals("") || cantidad.equals("") || observaciones.equals("") || cantidad_min.equals("") || placa.equals("") || 
-           km.equals("") || motor.equals("") || km_max.equals("")){
-            showMessageDialog(this,"LLene todos los campos necesarios","AVISO!",INFORMATION_MESSAGE);
-            validacion = false;
-            return validacion;
-        }else {
-            return validacion;
+    
+    public boolean error(){
+        boolean pase=true;
+        int a,m,d;
+       Calendar c = Calendar.getInstance();
+       
+       a=jDateChooser1.getCalendar().get(Calendar.YEAR);
+       m=jDateChooser1.getCalendar().get(Calendar.MONTH);
+       d=jDateChooser1.getCalendar().get(Calendar.DAY_OF_MONTH);
+         
+        if(jDateChooser1.getCalendar()==null || a >= c.get(Calendar.YEAR) && m >= c.get(Calendar.MONTH) && d > c.get(Calendar.DATE)){
+            error=1;
+            pase=false;           
         }
-    }*/
-    private boolean validacion(){
-        if(numeralAltaField.getText().equals("") || subcatAltaField.getText().equals("") || nombreAltaField.getText().equals("") ||
-            colorAltaField.getText().equals("") || descAltaField.getText().equals("") || noFacAltaField.getText().equals("") ||
-            importeAltaField.getText().equals("") || marcaAltaField.getText().equals("") || modeloAltaField.getText().equals("") ||
-            noSerieAltaField.getText().equals("") || cantidadAltaField.getText().equals("") || obsAltaField.getText().equals("") ||
-            cantMinAltaField.getText().equals("") || placaAltaField.getText().equals("") || kilomAltaField.getText().equals("") ||
-            motorAltaField.getText().equals("") || kilomMaxAltaField.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Llene todos los campos");
-            return validacion = false;
-        }else{
-            return validacion = true;
+       
+        if(nombreAltaField.getText().equals("")){
+            error=2;
+            pase=false;
+        }
+        
+        if(colorAltaField.getText().equals("")){
+            error=3;
+            pase=false;
+        }
+        
+        if(noFacAltaField.getText().equals("")){
+            error=4;
+            pase=false;
+        }
+        
+        if(importeAltaField.getText().equals("")){
+            error=5;
+            pase=false;
+        }
+        
+        if(marcaAltaField.getText().equals("")){
+            error=6;
+            pase=false;
+        }
+        
+        if(modeloAltaField.getText().equals("")){
+            error=7;
+            pase=false;
+        }
+        
+        if(noSerieAltaField.getText().equals("")){
+            error=8;
+            pase=false;
+        }
+        
+        if(cantidadAltaField.getText().equals("") || cantidadAltaField.getText().equals("0")){
+            error=9;
+            pase=false;
+        }
+        
+        if(cantMinAltaField.getText().equals("")){
+            error=10;
+            pase=false;
+        }
+        
+        if(comboClas.getSelectedIndex()==7 && placaAltaField.getText().equals("")){
+            error=11;
+            pase=false;
+        }
+        
+        if(comboClas.getSelectedIndex()==7 && kilomAltaField.getText().equals("")){
+            error=12;
+            pase=false;
+        }
+        
+        if(comboClas.getSelectedIndex()==7 && kilomMaxAltaField.getText().equals("")){
+            error=13;
+            pase=false;
+        }
+        
+        if(comboClas.getSelectedIndex()==7 &&  motorAltaField.getText().equals("")){
+            error=14;
+            pase=false;
+        }
+    return pase;  
+    }
+    
+    public void ManejadorError(int errorTipo){
+        switch(errorTipo){
+            case 1:
+                JOptionPane.showMessageDialog(this, "Fecha no Válida");
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(this, "No a llenado todos los campos necesarios");
+                nombreAltaField.requestFocus();
+                break;
+            case 3:
+                JOptionPane.showMessageDialog(this, "No a llenado todos los campos necesarios");
+                colorAltaField.requestFocus();
+                break;
+            case 4:
+                JOptionPane.showMessageDialog(this, "No a llenado todos los campos necesarios");
+                noFacAltaField.requestFocus();
+                break;
+            case 5:
+                JOptionPane.showMessageDialog(this, "No a llenado todos los campos necesarios"); 
+                importeAltaField.requestFocus();
+                break;
+            case 6:
+                JOptionPane.showMessageDialog(this, "No a llenado todos los campos necesarios");
+                marcaAltaField.requestFocus();
+                break;
+            case 7:
+                JOptionPane.showMessageDialog(this, "No a llenado todos los campos necesarios");
+                modeloAltaField.requestFocus();
+                break;
+            case 8:
+                JOptionPane.showMessageDialog(this, "No a llenado todos los campos necesarios");
+                noSerieAltaField.requestFocus();
+                break;
+            case 9:
+                JOptionPane.showMessageDialog(this, "No a llenado todos los campos necesarios");
+                cantidadAltaField.requestFocus();
+                break;
+            case 10:
+                JOptionPane.showMessageDialog(this, "No a llenado todos los campos necesarios");
+                cantMinAltaField.requestFocus();
+                break;
+            case 11:
+                JOptionPane.showMessageDialog(this, "No a llenado todos los campos necesarios");
+                placaAltaField.requestFocus();
+                break;
+            case 12:
+                JOptionPane.showMessageDialog(this, "No a llenado todos los campos necesarios");
+                kilomAltaField.requestFocus();
+                break;
+            case 13:
+                JOptionPane.showMessageDialog(this, "No a llenado todos los campos necesarios");
+                kilomMaxAltaField.requestFocus();
+                break;
+            case 14:
+                JOptionPane.showMessageDialog(this, "No a llenado todos los campos necesarios");
+                motorAltaField.requestFocus();
+                break;
         }
     }
+    
     private void guardarAltaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarAltaBtnActionPerformed
     inventarioBtn.setEnabled(true);
     modificarBtn.setEnabled(false);
@@ -656,6 +771,8 @@ public class ventanaInventario extends javax.swing.JFrame {
     int status,clasificacion,cantidad,cantidad_min;
     
     double importe;
+    
+    if(error()){
     
     status = comboStatus.getSelectedIndex()+1;
     clasificacion = comboClas.getSelectedIndex()+1;
@@ -678,11 +795,7 @@ public class ventanaInventario extends javax.swing.JFrame {
     km = kilomAltaField.getText();
     motor = motorAltaField.getText();
     km_max = kilomMaxAltaField.getText();
-    
-    //validacion(Numeral, Sub_cat, Nombre, Color, Descripcion, Fecha_compra, No_Factura, importe, marca, modelo,
-      //         no_serie, cantidad, observaciones, cantidad_min, placa, km, motor, km_max);
-    
-    if(validacion()){
+  
          try {
              PreparedStatement pst;
             System.out.println("Previo a conexion..."); 
@@ -771,7 +884,7 @@ public class ventanaInventario extends javax.swing.JFrame {
            System.out.println("Entró a catch...");
            JOptionPane.showMessageDialog(null, ex);
         }
-    }
+    }else ManejadorError(error);
   //  borrarCampos();
     }//GEN-LAST:event_guardarAltaBtnActionPerformed
 
@@ -945,7 +1058,7 @@ char c = evt.getKeyChar();
         } catch (SQLException ex) {}
     }
     
-    private String getFecha(){
+    public String getFecha(){
        String a,m,d,fecha;
        
        a=""+jDateChooser1.getCalendar().get(Calendar.YEAR);
