@@ -9,7 +9,9 @@ insert into clasificacion values(1,'EY-01-','Mobiliario',false),
 
 select * from clasificacion;
 
-select max(idproductos) as idproductos from productos;
+select max(idproductos) as id, max(con_pro)as numeral from productos;
+
+select idproductos as id, con_pro as numeral from productos;
 
 insert into status values(1,'Activo'),
 						 (2,'Baja'),
@@ -21,4 +23,6 @@ select * from status;
 select * from productos;
 
 insert into productos values(1,0001,'A','Teclado','Teclado PC','Genius','RSX','0123456789',
-					        'Negro','','',12/12/12,'2345',100.00,'Si sirve',3,0,null,null,1,1)
+					        'Negro','','',12/12/12,'2345',100.00,'Si sirve',3,0,null,null,1,1);
+                            
+SELECT idproductos, nom_pro, mar_pro, col_pro, nom_clas from productos inner join clasificacion on productos.clasificacion_id_clas = clasificacion.id_clas			

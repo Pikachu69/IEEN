@@ -25,6 +25,10 @@ CREATE TABLE IF NOT EXISTS `inventario`.`status` (
   `status` VARCHAR(45) NULL,
   PRIMARY KEY (`id_status`))
 ENGINE = InnoDB;
+insert into status values(1,'Activo'),
+						 (2,'Baja'),
+                         (3,'Comodato'),
+                         (4,'Donación');
 
 
 -- -----------------------------------------------------
@@ -40,20 +44,28 @@ CREATE TABLE IF NOT EXISTS `inventario`.`clasificacion` (
   PRIMARY KEY (`id_clas`))
 ENGINE = InnoDB;
 
+insert into clasificacion values(1,'EY-01-','Mobiliario',false),
+								(2,'EY-02-','Comunicación',false),
+                                (3,'EY-03-','Foto y Video',false),
+                                (4,'EY-04-','A/C',false),
+                                (5,'EY-05-','Comunicación 2',false),
+                                (6,'EY-06-','Audiovisuales',false),
+                                (7,'EY-07-','Diverso',false),
+                                (8,'EY-10-','Transporte',false);
+
 -- -----------------------------------------------------
 -- Table `inventario`.`notificaciones`
 -- -----------------------------------------------------
-/*DROP TABLE IF EXISTS `inventario`.`notificaciones` ;
+DROP TABLE IF EXISTS `inventario`.`notificaciones` ;
 
 CREATE TABLE IF NOT EXISTS `inventario`.`notificaciones` (
   `idproductos` INT NOT NULL,
   `nom_pro` VARCHAR(45) NULL,
   `mar_pro` VARCHAR(45) NULL,
   `mot_sol` VARCHAR(200) NULL,
-  `tipo_sol` VARCHAR (15) NULL
- -- `depar` VARCHAR(40) NULL
+  `tipo_sol` VARCHAR (15) NULL,
+  `depar` VARCHAR(40) NULL)
 ENGINE = InnoDB;
-*/
 
 
 -- -----------------------------------------------------
@@ -71,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `inventario`.`productos` (
   `mod_pro` VARCHAR(45) NULL,
   `ser_pro` VARCHAR(45) NULL,
   `col_pro` VARCHAR(45) NULL,
-  `pia_pro` VARCHAR(45) NULL,
+  `pla_pro` VARCHAR(45) NULL,
   `nomot_pro` VARCHAR(45) NULL,
   `fechcompra_pro` DATE NULL,
   `nofact_pro` VARCHAR(20) NULL,
